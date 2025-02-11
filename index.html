@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Developer Portfolio</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+  />
+  <style>
+    :root {
+      --primary: #00ff88;
+      --secondary: #60efff;
+      --bg: #0a0a0a;
+      --card-bg: rgba(255, 255, 255, 0.05);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Inter", sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: white;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    /* Hero Section */
+    .hero {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      filter: blur(150px);
+      opacity: 0.2;
+      animation: gradientMove 8s infinite alternate;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero h1 {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 2px solid var(--primary);
+      opacity: 0;
+      transform: translateY(50px);
+      animation: fadeUp 1s forwards, typing 1s steps(12, end) forwards;
+    }
+
+    /* Blinking caret effect that disappears after typing */
+    .hero h1::after {
+      content: "";
+      display: inline-block;
+      width: 2px;
+      height: 100%;
+      background: var(--primary);
+      margin-left: 5px;
+      animation: blink 0.7s infinite, fadeOutCursor 0.1s forwards 1s;
+    }
+
+    .hero p.tagline {
+      font-size: 1.25rem;
+      margin-top: 1rem;
+    }
+
+    /* Projects Grid */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 4rem 0;
+    }
+
+    /* Changed from a div to an anchor tag for clickable cards */
+    .project-card {
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+      transform: translateY(50px);
+      opacity: 0;
+      transition: transform 0.3s, box-shadow 0.3s;
+      display: block; /* Makes the entire card a block-level element */
+      position: relative; /* For the glow pseudo-element */
+      text-decoration: none; /* Remove default link styling */
+      color: inherit; /* Inherit text color */
+      cursor: pointer;
+    }
+
+    .project-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 30px rgba(0, 255, 136, 0.1);
+    }
+
+    /* Faint green lighting effect on hover */
+    .project-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 15px;
+      background: radial-gradient(circle, rgba(0, 255, 136, 0.2) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.3s;
+      z-index: -1;
+    }
+
+    .project-card:hover::before {
+      opacity: 1;
+    }
+
+    /* Animated fade in & up for projects */
+    .project-card.animate {
+      animation: fadeInUp 0.8s ease-out forwards;
+    }
+
+    /* Skills Cloud */
+    .skills-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      margin: 4rem 0;
+    }
+
+    .skill {
+      padding: 0.5rem 1.5rem;
+      border: 2px solid var(--primary);
+      border-radius: 30px;
+      transition: all 0.3s;
+      cursor: pointer;
+    }
+
+    .skill:hover {
+      background: var(--primary);
+      color: var(--bg);
+    }
+
+    /* Resume Section */
+    .resume {
+      text-align: center;
+      margin: 4rem 0;
+      padding: 2rem;
+    }
+
+    .download-btn {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      background: var(--primary);
+      color: var(--bg);
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.3s;
+      margin-top: 1rem;
+    }
+
+    .download-btn:hover {
+      background: var(--secondary);
+    }
+
+    /* Contact Section with mailto link */
+    .contact {
+      text-align: center;
+      margin: 4rem 0;
+      padding: 2rem;
+    }
+
+    .contact a {
+      color: var(--primary);
+      font-size: 1.5rem;
+      text-decoration: none;
+      border: 2px solid var(--primary);
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .contact a:hover {
+      background: var(--primary);
+      color: var(--bg);
+    }
+
+    /* Footer Section */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      margin-top: 4rem;
+    }
+
+    footer a {
+      color: var(--primary);
+      margin: 0 1rem;
+      font-size: 1.5rem;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    footer a:hover {
+      color: var(--secondary);
+    }
+
+    /* Animations */
+    @keyframes gradientMove {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(100px, 100px); }
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    @keyframes fadeOutCursor {
+      to { opacity: 0; }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Interactive Cursor */
+    .cursor {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--primary);
+      border-radius: 50%;
+      pointer-events: none;
+      transition: transform 0.3s;
+      z-index: 999;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="cursor"></div>
+
+  <section class="hero">
+    <div class="container hero-content">
+      <h1>AI Developer</h1>
+      <p class="tagline">Transforming Ideas with Intelligent Solutions</p>
+    </div>
+  </section>
+
+  <section class="projects">
+    <div class="container">
+      <h2>Featured Projects</h2>
+      <div class="projects-grid">
+        <a class="project-card" href="#">
+          <h3>Intrusion Detection Model</h3>
+          <p>Applied quantum encodings to ISCX datasets (2009–2016) and evaluated their impact on canonical ML models for intrusion detection.</p>
+        </a>
+        <a class="project-card" target="_blank" href="https://github.com/gokulsodar/Invoice_Extractor">
+          <h3>Invoice Processing Automation</h3>
+          <p>Developed an invoice processing automation using UiPath as part of an internship at UBGroup, Kuwait.</p>
+        </a>
+        <a class="project-card" target="_blank" href="https://github.com/gokulsodar/teach-n-learn">
+          <h3>Interactive Learning Chatbot</h3>
+          <p>Developed a conversational AI chatbot with LLM APIs designed to assist users in a "teach-and-learn" framework, facilitating mutual learning and engagement.</p>
+        </a>
+        <a class="project-card" target="_blank" href="https://github.com/gokulsodar/youtube-summariser">
+          <h3>Youtube Video Summariser</h3>
+          <p>Built a YouTube video summarizer using the Groq API for fast, AI-generated summaries, enhancing content consumption efficiency.</p>
+        </a>
+        <a class="project-card" href="#">
+          <h3>Land Price Prediction App</h3>
+          <p>The application predicts land prices based on user input and displays the results on the front end.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="skills">
+    <div class="container">
+      <h2>Technical Expertise</h2>
+      <div class="skills-cloud">
+        <div class="skill">Machine Learning</div>
+        <div class="skill">Python</div>
+        <div class="skill">Pennylane</div>
+        <div class="skill">Data Science</div>
+        <div class="skill">C++</div>
+        <div class="skill">Web Dev</div>
+        <!-- Add more skills as needed -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Resume Download Section -->
+  <section class="resume">
+    <div class="container">
+      <h2>Resume</h2><br>
+      <p>Download my resume to learn more about my professional experience.</p><br>
+      <a href="resume.pdf" download class="download-btn">Download Resume</a>
+    </div>
+  </section>
+
+  <!-- Contact Me Section using mailto: link -->
+  <section class="contact">
+    <div class="container">
+      <h2>Contact Me</h2><br>
+      <p>If you have any questions or would like to work together, please email me:</p><br><br>
+      <a href="mailto:gokulssodar@gmail.com">gokulssodar@gmail.com</a>
+    </div>
+  </section>
+
+  <!-- Footer with Social Links -->
+  <footer>
+    <div class="container">
+      <a href="https://github.com/gokulsodar" target="_blank"><i class="fab fa-github"></i></a>
+      <a href="https://www.linkedin.com/in/gokul-sunil-sodar/" target="_blank"><i class="fab fa-linkedin"></i></a>
+      <a href="https://www.instagram.com/gokul_sodar/" target="_blank"><i class="fab fa-instagram"></i></a>
+    </div>
+  </footer>
+
+  <script>
+    // Custom Cursor
+    const cursor = document.querySelector('.cursor');
+    document.addEventListener('mousemove', (e) => {
+      cursor.style.left = e.pageX + 'px';
+      cursor.style.top = e.pageY + 'px';
+    });
+
+    // Scroll Animations for Project Cards with Improved Animation
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.project-card').forEach((el, index) => {
+      el.style.animationDelay = index * 0.2 + 's';
+      observer.observe(el);
+    });
+
+    // Hover Effects for Skills (expanding custom cursor)
+    document.querySelectorAll('.skill').forEach(skill => {
+      skill.addEventListener('mouseenter', () => {
+        cursor.style.transform = 'scale(2)';
+      });
+      skill.addEventListener('mouseleave', () => {
+        cursor.style.transform = 'scale(1)';
+      });
+    });
+  </script>
+</body>
+</html>
